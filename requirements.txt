@@ -1,0 +1,26 @@
+# Веб-фреймворк
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# Telegram API
+python-telegram-bot==20.6
+
+# База данных
+sqlalchemy==2.0.23
+alembic==1.12.1
+
+# Валидация данных
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Дополнительные утилиты
+python-dotenv==1.0.0
+requests==2.31.0
+aiofiles==23.2.1
+jinja2==3.1.2
+
+# Для разработки
+pytest==7.4.3
+pytest-asyncio==0.21.1
+black==23.11.0
+flake8==6.1.0
