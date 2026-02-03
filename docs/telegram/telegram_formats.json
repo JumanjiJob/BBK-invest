@@ -1,0 +1,174 @@
+{
+  "description": "Форматы заявок для отправки в Telegram. Используются как эталон для генерации сообщений.",
+  "version": "1.0",
+  "formats": {
+    "individual": {
+      "name": "Физическое лицо (заемщик)",
+      "description": "Заявка от физического лица на получение займа",
+      "telegram_template": "Имя: {name}\nЗалог: {collateral}\nСумма: {amount}\nЦель займа: {purpose}\nТелефон: {phone}",
+      "fields": [
+        {
+          "name": "name",
+          "description": "Имя клиента",
+          "type": "string",
+          "required": true,
+          "validation": "не менее 2 символов"
+        },
+        {
+          "name": "collateral",
+          "description": "Описание залога (авто или недвижимость)",
+          "type": "string",
+          "required": true,
+          "example": "Infinity QX70, 2020 год"
+        },
+        {
+          "name": "amount",
+          "description": "Сумма займа в рублях",
+          "type": "integer",
+          "required": true,
+          "validation": "число > 0"
+        },
+        {
+          "name": "purpose",
+          "description": "Цель получения займа",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "phone",
+          "description": "Контактный телефон",
+          "type": "string",
+          "required": true,
+          "validation": "российский формат (10-11 цифр)"
+        }
+      ],
+      "example": {
+        "name": "Алексей",
+        "collateral": "Infinity QX70, 2020 год",
+        "amount": 2000000,
+        "purpose": "развитие бизнеса",
+        "phone": "89087536776"
+      }
+    },
+
+    "business": {
+      "name": "Бизнес (ЮЛ/ИП)",
+      "description": "Заявка от юридического лица или ИП на получение займа",
+      "telegram_template": "Имя: {company_name}\nТип: Заемщик (бизнес)\nСумма: {amount}\nОбеспечение: {collateral}\nЦель займа: {purpose}\nТелефон: {phone}",
+      "fields": [
+        {
+          "name": "company_name",
+          "description": "Название компании или ФИО ИП",
+          "type": "string",
+          "required": true,
+          "examples": ["ООО «ТехноПром»", "ИП Иванов Игорь"],
+          "note": "Для ИП обязательно указывать 'ИП' перед ФИО"
+        },
+        {
+          "name": "amount",
+          "description": "Сумма займа в рублях",
+          "type": "integer",
+          "required": true,
+          "validation": "число > 0"
+        },
+        {
+          "name": "collateral",
+          "description": "Описание обеспечения",
+          "type": "string",
+          "required": true,
+          "examples": [
+            "Недвижимость: офис, 150 кв.м",
+            "Движимое имущество: станки (оборудование 2023 г.)",
+            "Интеллектуальная собственность: товарный знак 'Марка'"
+          ],
+          "note": "Можно перечислить несколько видов обеспечения"
+        },
+        {
+          "name": "purpose",
+          "description": "Цель получения займа",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "phone",
+          "description": "Контактный телефон",
+          "type": "string",
+          "required": true,
+          "validation": "российский формат"
+        }
+      ],
+      "example": {
+        "company_name": "ООО «ТехноПром»",
+        "amount": 15000000,
+        "collateral": "Станки (оборудование 2023 г.), товарный знак",
+        "purpose": "развитие производства",
+        "phone": "89087536776"
+      }
+    },
+
+    "investor": {
+      "name": "Инвестор",
+      "description": "Заявка от инвестора",
+      "telegram_template": "Имя: {name}\nТип: Инвестор\nСумма для инвестирования: {investment_amount}\nГоризонт инвестирования: {term_months} месяцев\nЦель: {investment_goal}\nТелефон: {phone}",
+      "fields": [
+        {
+          "name": "name",
+          "description": "Имя инвестора",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "investment_amount",
+          "description": "Сумма для инвестирования в рублях",
+          "type": "integer",
+          "required": true,
+          "validation": "число > 0"
+        },
+        {
+          "name": "term_months",
+          "description": "Срок инвестирования в месяцах",
+          "type": "integer",
+          "required": true,
+          "validation": "число от 1 до 120"
+        },
+        {
+          "name": "investment_goal",
+          "description": "Цель инвестирования",
+          "type": "string",
+          "required": true,
+          "examples": ["пассивный доход", "сохранение капитала", "диверсификация портфеля"]
+        },
+        {
+          "name": "phone",
+          "description": "Контактный телефон",
+          "type": "string",
+          "required": true,
+          "validation": "российский формат"
+        }
+      ],
+      "example": {
+        "name": "Екатерина",
+        "investment_amount": 5000000,
+        "term_months": 12,
+        "investment_goal": "пассивный доход",
+        "phone": "89123456789"
+      }
+    }
+  },
+
+  "common_notes": {
+    "currency": "Все суммы указываются в рублях без символа валюты",
+    "phone_format": "Телефон указывается в формате 10-11 цифр, начинается с 8 или +7",
+    "data_security": "Согласно 152-ФЗ, данные хранятся не более 24 часов",
+    "timestamp": "К каждой заявке автоматически добавляется метка времени в формате YYYY-MM-DD HH:MM:SS"
+  },
+
+  "generation_logic": {
+    "step_1": "Собрать все поля из соответствующего сценария",
+    "step_2": "Проверить обязательные поля на заполнение",
+    "step_3": "Применить валидацию для каждого поля",
+    "step_4": "Подставить значения в шаблон telegram_template",
+    "step_5": "Добавить метку времени в начало сообщения",
+    "step_6": "Отправить через Telegram Bot API"
+  }
+}
