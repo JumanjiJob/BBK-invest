@@ -7,7 +7,7 @@ print()
 
 # 1. Проверка файлов
 print("1. Проверка файлов...")
-if os.path.exists('.env'):
+if os.path.exists('../.env'):
     print("✅ Файл .env существует")
 else:
     print("❌ Файл .env НЕ найден")

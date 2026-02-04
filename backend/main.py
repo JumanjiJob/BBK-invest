@@ -1,11 +1,17 @@
 """
 Главный модуль ИИ-консультанта BBKinvest.
-Запускает сервер и инициализирует все компоненты.
 """
 import os
+import sys
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+# Добавляем путь к проекту для корректных импортов
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Импортируем API endpoints
+from backend.api.endpoints import router as chat_router
 
 # Настройка логирования
 logging.basicConfig(
@@ -29,13 +35,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Подключаем маршруты
+app.include_router(chat_router)
+
 @app.get("/")
 async def root():
     """Проверка работоспособности API."""
     return {
         "status": "ok",
         "service": "BBKinvest AI Consultant",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "endpoints": {
+            "chat": "/api/v1/chat (POST)",
+            "quick_start": "/api/v1/chat/quick-start (POST)",
+            "health": "/health (GET)"
+        }
     }
 
 @app.get("/health")
