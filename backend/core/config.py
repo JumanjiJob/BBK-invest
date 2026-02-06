@@ -2,21 +2,22 @@
 Конфигурация приложения.
 """
 from pydantic_settings import BaseSettings
-from typing import List
+from typing import List, Optional
 
 
 class Settings(BaseSettings):
     # Основные настройки
     app_name: str = "BBKinvest AI Consultant"
+    app_env: str = "development"
     debug: bool = False
-    secret_key: str
+    secret_key: str = "your-secret-key-here-change-in-production"
 
     # База данных
     database_url: str = "sqlite:///./database/bbk_ai.db"
 
     # Telegram
-    telegram_bot_token: str
-    telegram_chat_id: str
+    telegram_bot_token: str = ""
+    telegram_chat_id: str = ""
     telegram_enabled: bool = True
 
     # Email
